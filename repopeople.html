@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>GITHUB</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide|Trirong">
+    <style>
+        body{
+            background-color:gray;
+            margin:2%;
+        }
+        h1 {
+            background-color:cornsilk;
+            text-transform: capitalize;
+            font-weight: 400;
+            font-size: 50px;
+            font-family: "Audiowide", sans-serif;
+            text-shadow: 3px 3px 3px #ababab;
+            border: 3px black solid;
+            width:  30%;
+            height: 100%;
+            
+        }
+        #fetch{
+            color:black;
+            width: 160px;
+            height: 45px;
+            font-size: 15px;
+            font-weight: 500;
+            border-radius: 6px;
+            background:lightslategray;
+            border: 2px solid crimson;
+        }
+        #fetch:hover{
+            color: black;
+            background:crimson;
+        }
+        div{
+            background-color:lightgray;
+            height: 60%;
+            width: 50%;
+            padding:30px 40px;
+            font-family: "Trirong", serif;
+            text-shadow: 3px 3px 3px #ababab;
+            margin-top: 10px;
+            border:2px black solid;
+            border-radius: 10px;
+        }
+        div:hover{
+            color: black;
+            background:lightsteelblue;
+        }
+        img{
+            float:left;
+        }
+        div,ul,li{
+            font-size: 15px;
+            font-weight: 300;
+            margin-left:50px;
+            
+        }
+        ul{
+            background-color: LightCyan;
+            border-radius: 15px;
+        }
+                
+    </style>
+</head>
+<body>
+    <h1>GITHUB USERs</h1>
+    <button class="" id="fetch">Load Github Users</button>
+    <section id="info"></section>
+
+    <script>
+        document.getElementById('fetch').addEventListener('click' ,load);
+
+
+        function load(){
+            var req = new XMLHttpRequest();
+            req.open('GET' ,'https://api.github.com/users');
+
+            req.onload = function(){
+                if(req.status == 200){
+                    var people = JSON.parse(req.responseText);
+
+                    var login = people.login;
+                    var id = people.id ;
+                    var node_id = people.node_id;
+                    var avatar_url = people.avatar_url;
+                    var html_url = people.html_url ;
+                    var repos_url = people.repos_url;
+
+                    var output=" ";
+                    for(var i in people){
+                    output +='<div>'+
+                    '<img src='+people[i].avatar_url +'width="100" height="100">' +
+                    '<ul>' +              
+                    '<li>ID:'+'"'+ people[i].id+'"'+'</li>' +   
+                    '<li>Login:'+'"'+ people[i].login +'"'+'</li>' +  
+                    '<li>Repos_url:'+'"'+ people[i].repos_url +'"'+'</li>'+
+                    '<li>Html_url:'+'"'+people[i].html_url+'"'+'</li>'+
+                    '<li>Node_id:'+'"'+people[i].node_id +'"'+'</li>'+
+                    '</ul>' +   
+                    '</div>';
+                    document.getElementById('info').innerHTML = output;
+                } 
+               } 
+            }
+            req.send();
+        }
+          
+        </script>
+</body>
+</html>
